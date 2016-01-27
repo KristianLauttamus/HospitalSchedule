@@ -1,9 +1,9 @@
-# Tietokantasovelluksen esittelysivu
+﻿# Tietokantasovelluksen esittelysivu
 
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](https://hospital-schedule.herokuapp.com/)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki dokumentaatiooni](doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
