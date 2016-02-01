@@ -1,9 +1,23 @@
 <?php
 
-  $routes->get('/', function() {
-    HelloWorldController::index();
-  });
+$routes->get('/', function () {
+    HomeController::index();
+});
 
-  $routes->get('/hiekkalaatikko', function() {
+$routes->get('/users', function () {
+    UsersController::index();
+});
+$routes->get('/users/create', function () {
+    UsersController::create();
+});
+
+$routes->get('/roles', function () {
+    RolesController::index();
+});
+$routes->get('/roles/create', function () {
+    RolesController::create();
+});
+
+$routes->get('/hiekkalaatikko', function () {
     HelloWorldController::sandbox();
-  });
+});
