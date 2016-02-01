@@ -3,6 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](https://hospital-schedule.herokuapp.com/)
+* Linkit: /users /users/create /roles /roles/create
 * [Linkki dokumentaatiooni](doc/dokumentaatio.pdf)
 
 ## Työn aihe
