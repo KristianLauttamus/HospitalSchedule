@@ -11,6 +11,7 @@ return array(
     'DB' => $baseDir . '/lib/database.php',
     'DatabaseConfig' => $baseDir . '/config/database.php',
     'HelloWorldController' => $baseDir . '/app/controllers/hello_world_controller.php',
+    'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'Redirect' => $baseDir . '/lib/redirect.php',
     'View' => $baseDir . '/lib/view.php',
     'Whoops\\Module' => $vendorDir . '/filp/whoops/src/deprecated/Zend/Module.php',

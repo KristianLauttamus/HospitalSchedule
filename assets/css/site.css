@@ -12,3 +12,7 @@
 .kaushan {
 	font-family: 'Kaushan Script', cursive;
 }
+
+th.open {
+	width: 50px;
+}
