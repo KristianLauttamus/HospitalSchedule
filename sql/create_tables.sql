@@ -1,4 +1,9 @@
 -- Lisää CREATE TABLE lauseet tähän tiedostoon
+CREATE TABLE hospitals(
+  id SERIAL PRIMARY KEY,
+  name varchar(50) NOT NULL
+);
+
 CREATE TABLE users(
   id SERIAL PRIMARY KEY,
   name varchar(50) NOT NULL,
@@ -7,7 +12,13 @@ CREATE TABLE users(
   role_id INTEGER REFERENCES roles(id)
 );
 
+CREATE TABLE hospital_users(
+  hospital_id INTEGER REFERENCES hospitals(id),
+  user_id INTEGER REFERENCES users(id)
+);
+
 CREATE TABLE roles(
   id SERIAL PRIMARY KEY,
-  name varchar(50) NOT NULL
+  name varchar(50) NOT NULL,
+  admin boolean DEFAULT false
 );
