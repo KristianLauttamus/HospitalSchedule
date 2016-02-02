@@ -13,13 +13,13 @@
 
 	{% block head %}
 		<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-		<link href="{{ asset('css/site.css') }}" rel="stylesheet">
+		<link href="{{ app.request.getBaseURL() }}/asset/css/site.css" rel="stylesheet">
 
 		<!-- Bootstrap (tyylitiedosto) -->
-		<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ app.request.getBaseURL() }}/asset/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- Oma tyylitiedostomme -->
-		<link href="{{ asset('css/site.css') }}" rel="stylesheet">
+		<link href="{{ app.request.getBaseURL() }}/asset/css/site.css" rel="stylesheet">
 	{% endblock %}
 </head>
 
