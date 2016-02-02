@@ -13,6 +13,8 @@ return array(
     'HelloWorldController' => $baseDir . '/app/controllers/hello_world_controller.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'Redirect' => $baseDir . '/lib/redirect.php',
+    'RolesController' => $baseDir . '/app/controllers/RolesController.php',
+    'UsersController' => $baseDir . '/app/controllers/UsersController.php',
     'View' => $baseDir . '/lib/view.php',
     'Whoops\\Module' => $vendorDir . '/filp/whoops/src/deprecated/Zend/Module.php',
     'Whoops\\Provider\\Zend\\ExceptionStrategy' => $vendorDir . '/filp/whoops/src/deprecated/Zend/ExceptionStrategy.php',
