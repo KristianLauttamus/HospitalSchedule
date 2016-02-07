@@ -4,33 +4,35 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Users</h2>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Ylläpitäjä</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>Perushoitaja</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Sairaanhoitaja</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>Lääkäri</td>
-						</tr>
-					</tbody>
-				</table>
+				{% if roles is empty %}
+					<div class="alert alert-default">
+						<p>No roles created yet</p>
+					</div>
+				{% else %}
+					<h2>Roles</h2>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</th>
+								<th>Admin status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for role in roles %}
+								<tr id="{{role.id}}">
+									<td>{{ role.id }}</td>
+									<td>{{ role.name }}</td>
+									{% if role.admin %}
+										<td><span class="label label-success">Admin</span></td>
+									{% else %}
+										<td><span class="label label-default">Default</span></td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
 			</div>
 		</div>
 	</div>

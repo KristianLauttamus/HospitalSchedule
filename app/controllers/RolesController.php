@@ -14,4 +14,18 @@ class RolesController extends BaseController
         // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
         View::make('roles-create.html');
     }
+
+    public static function store()
+    {
+        $params = $_POST;
+
+        $role = new Role(array(
+            'name'  => $params['name'],
+            'admin' => isset($params['admin']),
+        ));
+
+        $role->save();
+
+        Redirect::to('/roles/#' . $role->id);
+    }
 }

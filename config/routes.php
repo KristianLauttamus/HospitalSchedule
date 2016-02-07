@@ -17,6 +17,9 @@ $routes->get('/roles', function () {
 $routes->get('/roles/create', function () {
     RolesController::create();
 });
+$routes->get('/roles/store', function () {
+    RolesController::store();
+});
 
 $routes->get('/hiekkalaatikko', function () {
     HelloWorldController::sandbox();
