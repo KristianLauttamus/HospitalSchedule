@@ -2,14 +2,14 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://hospital-schedule.herokuapp.com/)
+* [Linkki sovellukseeni](http://krislaut.users.cs.helsinki.fi/tsoha/)
 * [Linkki dokumentaatiooni](doc/dokumentaatio.pdf)
 
 Linkit:
-* [/users](https://hospital-schedule.herokuapp.com/users)
-* [/users/create](https://hospital-schedule.herokuapp.com/users/create)
-* [/roles](https://hospital-schedule.herokuapp.com/roles)
-* [/roles/create](https://hospital-schedule.herokuapp.com/roles/create)
+* [/users](http://krislaut.users.cs.helsinki.fi/tsoha/users)
+* [/users/create](http://krislaut.users.cs.helsinki.fi/tsoha/users/create)
+* [/roles](http://krislaut.users.cs.helsinki.fi/tsoha/roles)
+* [/roles/create](http://krislaut.users.cs.helsinki.fi/tsoha/roles/create)
 
 ## Työn aihe
 
