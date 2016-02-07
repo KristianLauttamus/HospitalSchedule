@@ -13,13 +13,13 @@
 
 	{% block head %}
 		<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-		<link href="{{ app.request.getBaseURL() }}/assets/css/site.css" rel="stylesheet">
+		<link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
 
 		<!-- Bootstrap (tyylitiedosto) -->
-		<link href="{{ app.request.getBaseURL() }}/assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{{base_path}}/assets/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- Oma tyylitiedostomme -->
-		<link href="{{ app.request.getBaseURL() }}/assets/css/site.css" rel="stylesheet">
+		<link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
 	{% endblock %}
 </head>
 
@@ -59,13 +59,13 @@
 
 	{% block body %}
 	<!-- jQuery -->
-	<script src="{{ app.request.getBaseURL() }}/assets/js/jquery.min.js"></script>
+	<script src="{{base_path}}/assets/js/jquery.min.js"></script>
 
 	<!-- Bootstrap (skriptitiedosto) -->
-	<script src="{{ app.request.getBaseURL() }}/assets/js/bootstrap.min.js"></script>
+	<script src="{{base_path}}/assets/js/bootstrap.min.js"></script>
 
 	<!-- Oma skriptitiedostomme -->
-	<script src="{{ app.request.getBaseURL() }}/assets/js/site.js"></script>
+	<script src="{{base_path}}/assets/js/site.js"></script>
 	{% endblock %}
 </body>
 </html>
