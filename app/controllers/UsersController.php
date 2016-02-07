@@ -15,11 +15,11 @@ class UsersController extends BaseController
         $roles = Role::all();
 
         // Jos rooleja ei löydy niin luodaan rooli ensin
-        if ($roles == null ||  count($roles) < 0) {
+        if ($roles == null || empty($roles)) {
             Redirect::to('/roles/create');
         }
 
-        View::make('users-create.html');
+        View::make('users-create.html', array('roles' => $roles));
     }
 
     public static function store()
@@ -35,6 +35,6 @@ class UsersController extends BaseController
 
         $user->save();
 
-        Redirect::to('/users/#' . $user->id);
+        Redirect::to('/users#' . $user->id);
     }
 }

@@ -12,17 +12,16 @@ class User extends BaseModel
     // Find all
     public static function all()
     {
-        // Alustetaan kysely tietokantayhteydellämme
+        // Lets use our DB connection and execute our query
         $query = DB::connection()->prepare('SELECT * FROM users');
-        // Suoritetaan kysely
         $query->execute();
-        // Haetaan kyselyn tuottamat rivit
+
+        // Fetch all rows from the query
         $rows  = $query->fetchAll();
         $users = array();
 
-        // Käydään kyselyn tuottamat rivit läpi
+        // Go through rows
         foreach ($rows as $row) {
-            // Tämä on PHP:n hassu syntaksi alkion lisäämiseksi taulukkoon :)
             $users[] = new User(array(
                 'id'       => $row['id'],
                 'name'     => $row['name'],

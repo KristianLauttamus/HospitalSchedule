@@ -5,13 +5,13 @@ class RolesController extends BaseController
 
     public static function index()
     {
-        // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-        View::make('roles.html');
+        $roles = Role::all();
+
+        View::make('roles.html', array('roles' => $roles));
     }
 
     public static function create()
     {
-        // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
         View::make('roles-create.html');
     }
 
@@ -26,6 +26,6 @@ class RolesController extends BaseController
 
         $role->save();
 
-        Redirect::to('/roles/#' . $role->id);
+        Redirect::to('/roles#' . $role->id);
     }
 }

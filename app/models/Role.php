@@ -12,17 +12,16 @@ class Role extends BaseModel
     // Find all
     public static function all()
     {
-        // Alustetaan kysely tietokantayhteydellämme
+        // Lets use our DB connection and execute our query
         $query = DB::connection()->prepare('SELECT * FROM roles');
-        // Suoritetaan kysely
         $query->execute();
-        // Haetaan kyselyn tuottamat rivit
+
+        // Fetch all rows from the query
         $rows  = $query->fetchAll();
         $roles = array();
 
-        // Käydään kyselyn tuottamat rivit läpi
+        // Go through rows
         foreach ($rows as $row) {
-            // Tämä on PHP:n hassu syntaksi alkion lisäämiseksi taulukkoon :)
             $roles[] = new Role(array(
                 'id'    => $row['id'],
                 'name'  => $row['name'],
@@ -59,8 +58,8 @@ class Role extends BaseModel
         $query = DB::connection()->prepare('INSERT INTO roles (name, admin) VALUES (:name, :admin) RETURNING id');
         $query->execute(array('name' => $this->name, 'admin' => $this->admin));
         $row = $query->fetch();
-        //Kint::trace();
-        //Kint::dump($row);
+        Kint::trace();
+        Kint::dump($row);
         $this->id = $row['id'];
     }
 }
