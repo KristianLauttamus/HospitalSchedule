@@ -1,8 +1,8 @@
 <?php
 
-class Hospital extends BaseModel
+class Role extends BaseModel
 {
-    public $id, $name;
+    public $id, $name, $admin;
 
     public function __construct($attributes)
     {
@@ -13,39 +13,41 @@ class Hospital extends BaseModel
     public static function all()
     {
         // Alustetaan kysely tietokantayhteydellämme
-        $query = DB::connection()->prepare('SELECT * FROM hospitals');
+        $query = DB::connection()->prepare('SELECT * FROM roles');
         // Suoritetaan kysely
         $query->execute();
         // Haetaan kyselyn tuottamat rivit
-        $rows      = $query->fetchAll();
-        $hospitals = array();
+        $rows  = $query->fetchAll();
+        $roles = array();
 
         // Käydään kyselyn tuottamat rivit läpi
         foreach ($rows as $row) {
             // Tämä on PHP:n hassu syntaksi alkion lisäämiseksi taulukkoon :)
-            $hospitals[] = new Hospital(array(
-                'id'   => $row['id'],
-                'name' => $row['name'],
+            $roles[] = new Role(array(
+                'id'    => $row['id'],
+                'name'  => $row['name'],
+                'admin' => $row['admin'],
             ));
         }
 
-        return $hospitals;
+        return $roles;
     }
 
     // Find one with id
     public static function find($id)
     {
-        $query = DB::connection()->prepare('SELECT * FROM hospitals WHERE id = :id LIMIT 1');
+        $query = DB::connection()->prepare('SELECT * FROM roles WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
 
         if ($row) {
-            $hospital = new Hospital(array(
-                'id'   => $row['id'],
-                'name' => $row['name'],
+            $role = new User(array(
+                'id'    => $row['id'],
+                'name'  => $row['name'],
+                'admin' => $row['admin'],
             ));
 
-            return $hospital;
+            return $role;
         }
 
         return null;
@@ -54,8 +56,8 @@ class Hospital extends BaseModel
     // Save
     public function save()
     {
-        $query = DB::connection()->prepare('INSERT INTO hospitals (name) VALUES (:name) RETURNING id');
-        $query->execute(array('name' => $this->name));
+        $query = DB::connection()->prepare('INSERT INTO roles (name, admin) VALUES (:name, :admin) RETURNING id');
+        $query->execute(array('name' => $this->name, 'admin' => $this->admin));
         $row = $query->fetch();
         //Kint::trace();
         //Kint::dump($row);
