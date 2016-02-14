@@ -5,6 +5,9 @@
 			"lib",
 			"app/controllers",
 			"app/models"
+		],
+		"files": [
+			"app/helpers.php"
 		]
 	},
 	"require": {

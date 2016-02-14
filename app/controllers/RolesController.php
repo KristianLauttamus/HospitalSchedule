@@ -35,4 +35,15 @@ class RolesController extends BaseController
 
         Redirect::to('/roles#' . $role->id);
     }
+
+    public static function destroy($id)
+    {
+        $role = Role::find($id);
+
+        $role->destroy();
+
+        flash('Role removed successfully!');
+
+        Redirect::to('/roles');
+    }
 }

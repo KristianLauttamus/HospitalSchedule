@@ -25,6 +25,9 @@ $routes->get('/users/create', function () {
 $routes->post('/users/store', function () {
     UsersController::store();
 });
+$routes->get('/users/:id/destroy', function ($id) {
+    UsersController::destroy($id);
+});
 
 // Roles
 $routes->get('/roles', function () {
@@ -35,4 +38,21 @@ $routes->get('/roles/create', function () {
 });
 $routes->post('/roles/store', function () {
     RolesController::store();
+});
+$routes->get('/roles/:id/destroy', function ($id) {
+    RolesController::destroy($id);
+});
+
+// Hospitals
+$routes->get('/hospitals', function () {
+    HospitalsController::index();
+});
+$routes->get('/hospitals/create', function () {
+    HospitalsController::create();
+});
+$routes->post('/hospitals/store', function () {
+    HospitalsController::store();
+});
+$routes->get('/hospitals/:id/destroy', function ($id) {
+    HospitalsController::destroy($id);
 });

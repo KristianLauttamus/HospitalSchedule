@@ -2,12 +2,14 @@
 
 class User extends BaseModel
 {
+    protected $table = 'users';
+
     public $id, $name, $email, $password, $role_id;
 
     public function __construct($attributes)
     {
         parent::__construct($attributes);
-        $this->validators = array('validate_with_length:name,Name,4', 'validate_relation_by_id:role_id,' . $attributes['role_id'], 'validate_email:email,true,users,email');
+        $this->validators = array('validate_with_length:name,Name,4', 'validate_relation_by_id:role_id,roles,' . $attributes['role_id'], 'validate_email:email,true,users,email');
     }
 
     // Authenticate

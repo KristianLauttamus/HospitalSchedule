@@ -2,6 +2,8 @@
 
 class Role extends BaseModel
 {
+    protected $table = 'roles';
+
     public $id, $name, $admin;
 
     public function __construct($attributes)

@@ -22,6 +22,11 @@ class View
 
             // Tulostetaan Twig:n renderöimä näkymä
             echo $twig->render($view, $content);
+
+            // Poistetaan Sweetalert sessiosta renderöinnin jälkeen
+            if (isset($_SESSION['alert'])) {
+                unset($_SESSION['alert']);
+            }
         } catch (Exception $e) {
             die('Virhe näkymän näyttämisessä: ' . $e->getMessage());
         }
@@ -34,9 +39,10 @@ class View
         Twig_Autoloader::register();
 
         $twig_loader = new Twig_Loader_Filesystem('app/views');
-        $twig_loader->addGlobal('session', $_SESSION);
 
-        return new Twig_Environment($twig_loader);
+        $twig_environment = new Twig_Environment($twig_loader);
+        $twig_environment->addGlobal('session', $_SESSION);
+        return $twig_environment;
     }
 
     private static function set_flash_message(&$content)

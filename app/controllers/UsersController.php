@@ -44,4 +44,15 @@ class UsersController extends BaseController
 
         Redirect::to('/users#' . $user->id);
     }
+
+    public static function destroy($id)
+    {
+        $user = User::find($id);
+
+        $user->destroy();
+
+        flash('User removed successfully!');
+
+        Redirect::to('/users');
+    }
 }

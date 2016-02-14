@@ -17,6 +17,22 @@ class BaseModel
         }
     }
 
+    public function destroy()
+    {
+        if (isset($this->custom_pkey)) {
+            $query = DB::connection()->prepare('DELETE FROM ' . $this->table . ' WHERE ' . $this->custom_pkey . ' = :pkey');
+            $query->execute(array('pkey' => $this->{$this->custom_pkey}));
+        } else {
+            $query = DB::connection()->prepare('DELETE FROM ' . $this->table . ' WHERE id = :id');
+            $query->execute(array('id' => $this->id));
+        }
+    }
+
+    /**
+     *
+     * Validation
+     *
+     */
     public function errors()
     {
         // Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
@@ -25,9 +41,9 @@ class BaseModel
         foreach ($this->validators as $validator) {
             $varray = explode(':', $validator);
             if (isset($varray[1])) {
-                $errors[] = call_user_func_array($this->{$varray[0]}, explode(',', $varray));
+                array_merge($errors, call_user_func_array(array($this, $varray[0]), explode(',', $varray[1])));
             } else {
-                $errors[] = $this->{$varray[0]};
+                array_merge($errors, $this->{$varray[0]}());
             }
         }
 
@@ -51,14 +67,14 @@ class BaseModel
     {
         $relation = $this->{$relation};
         if ($empty && $relation == '') {
-            return [];
+            return array();
         }
 
         $query = DB::connection()->prepare('SELECT * FROM ' . $table . ' WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $relation));
         $row = $query->fetch();
         if ($row) {
-            return [];
+            return array();
         } else {
             $errors[] = "That role doesn't exist";
 
@@ -77,12 +93,10 @@ class BaseModel
                     $errors[] = "That email is not unique";
 
                     return $errors;
-                } else {
-                    return [];
                 }
             }
 
-            return [];
+            return array();
         } else {
             $errors[] = 'Invalid email address';
             return $errors;

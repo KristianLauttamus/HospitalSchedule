@@ -20,6 +20,10 @@
 
 		<!-- Oma tyylitiedostomme -->
 		<link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
+
+		{% if session.alert %}
+			<link href="{{base_path}}/assets/css/sweetalert.css" rel="stylesheet">
+		{% endif %}
 	{% endblock %}
 </head>
 
@@ -58,14 +62,28 @@
 	</div>
 
 	{% block body %}
-	<!-- jQuery -->
-	<script src="{{base_path}}/assets/js/jquery.min.js"></script>
+		<!-- jQuery -->
+		<script src="{{base_path}}/assets/js/jquery.min.js"></script>
 
-	<!-- Bootstrap (skriptitiedosto) -->
-	<script src="{{base_path}}/assets/js/bootstrap.min.js"></script>
+		<!-- Bootstrap (skriptitiedosto) -->
+		<script src="{{base_path}}/assets/js/bootstrap.min.js"></script>
 
-	<!-- Oma skriptitiedostomme -->
-	<script src="{{base_path}}/assets/js/site.js"></script>
+		<!-- Oma skriptitiedostomme -->
+		<script src="{{base_path}}/assets/js/site.js"></script>
+
+		{% if session.alert %}
+			<script src="{{base_path}}/assets/js/sweetalert.min.js"></script>
+
+			<script>
+				swal({
+					title: "{{ session.alert.title }}",
+					text: "{{ session.alert.message }}",
+					type: "{{ session.alert.type }}",
+					timer: {{ session.alert.timer }},
+					showConfirmButton: false
+				});
+			</script>
+		{% endif %}
 	{% endblock %}
 </body>
 </html>

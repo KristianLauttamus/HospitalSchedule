@@ -34,4 +34,15 @@ class HospitalsController extends BaseController
 
         Redirect::to('/hospitals#' . $hospital->id);
     }
+
+    public static function destroy($id)
+    {
+        $hospital = Hospital::find($id);
+
+        $hospital->destroy();
+
+        flash('Hospital removed successfully!');
+
+        Redirect::to('/hospitals');
+    }
 }

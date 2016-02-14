@@ -2,6 +2,8 @@
 
 class Hospital extends BaseModel
 {
+    protected $table = 'hospitals';
+
     public $id, $name;
 
     public function __construct($attributes)

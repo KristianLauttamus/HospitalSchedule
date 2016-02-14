@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "64cbb137eed6cfe073a9d9fa8945df62",
+    "hash": "b7094bb62451edc4551d1e0034b06f9a",
+    "content-hash": "19ce18694d666128d5ac2a99f1567d09",
     "packages": [
         {
             "name": "filp/whoops",
