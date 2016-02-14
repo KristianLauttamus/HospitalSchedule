@@ -82,4 +82,11 @@ class User extends BaseModel
         //Kint::dump($row);
         $this->id = $row['id'];
     }
+
+    // Update
+    public function update()
+    {
+        $query = DB::connection()->prepare('UPDATE users SET (name, email, password, role_id) = (:name, :email, :password, :role_id) WHERE id = :id');
+        $query->execute(array('id' => $this->id, 'name' => $this->name, 'email' => $this->email, 'password' => $this->password, 'role_id' => $this->role_id));
+    }
 }

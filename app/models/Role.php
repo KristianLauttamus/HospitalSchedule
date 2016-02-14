@@ -64,4 +64,11 @@ class Role extends BaseModel
 
         $this->id = $row['id'];
     }
+
+    // Update
+    public function update()
+    {
+        $query = DB::connection()->prepare('UPDATE roles SET (name, admin) = (:name, :admin) WHERE id = :id');
+        $query->execute(array('id' => $id, 'name' => $this->name, 'admin' => $this->admin));
+    }
 }

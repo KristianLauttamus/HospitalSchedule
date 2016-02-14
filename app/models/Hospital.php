@@ -63,4 +63,11 @@ class Hospital extends BaseModel
         //Kint::dump($row);
         $this->id = $row['id'];
     }
+
+    // Update
+    public function update()
+    {
+        $query = DB::connection()->prepare('UPDATE hospitals SET (name) = (:name) WHERE id = :id');
+        $query->execute(array('id' => $id, 'name' => $this->name));
+    }
 }
