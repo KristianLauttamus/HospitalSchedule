@@ -10,7 +10,6 @@ return array(
     'BaseModel' => $baseDir . '/lib/base_model.php',
     'DB' => $baseDir . '/lib/database.php',
     'DatabaseConfig' => $baseDir . '/config/database.php',
-    'HelloWorldController' => $baseDir . '/app/controllers/hello_world_controller.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'Hospital' => $baseDir . '/app/models/Hospital.php',
     'Redirect' => $baseDir . '/lib/redirect.php',
