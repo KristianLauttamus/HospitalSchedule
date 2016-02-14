@@ -7,6 +7,7 @@ class Hospital extends BaseModel
     public function __construct($attributes)
     {
         parent::__construct($attributes);
+        $this->validators = array('validate_with_length:name,Name,2');
     }
 
     // Find all

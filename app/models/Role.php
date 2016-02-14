@@ -7,6 +7,7 @@ class Role extends BaseModel
     public function __construct($attributes)
     {
         parent::__construct($attributes);
+        $this->validators = array('validate_with_length:name,Name,5');
     }
 
     // Find all
@@ -58,8 +59,7 @@ class Role extends BaseModel
         $query = DB::connection()->prepare('INSERT INTO roles (name, admin) VALUES (:name, :admin) RETURNING id');
         $query->execute(array('name' => $this->name, 'admin' => $this->admin));
         $row = $query->fetch();
-        Kint::trace();
-        Kint::dump($row);
+
         $this->id = $row['id'];
     }
 }

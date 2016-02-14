@@ -33,6 +33,13 @@ class UsersController extends BaseController
             'role_id'  => $params['role_id'],
         ));
 
+        $errors = $user->errors();
+        if (count($errors) > 0) {
+            // Todo error message
+
+            Redirect::to('/users/create', array('errors' => $errors, 'attributes' => $params));
+        }
+
         $user->save();
 
         Redirect::to('/users#' . $user->id);

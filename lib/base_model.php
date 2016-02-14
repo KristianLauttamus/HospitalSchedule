@@ -34,14 +34,14 @@ class BaseModel
         return $errors;
     }
 
-    public function validate_name()
+    public function validate_with_length($param, $translation, $length = 0)
     {
         $errors = array();
-        if ($this->name == '' || $this->name == null) {
-            $errors[] = 'Name is required!';
+        if ($this->{$param} == '' || $this->{$param} == null) {
+            $errors[] = ucfirst($translation . ' is required!');
         }
-        if (strlen($this->name) < 2) {
-            $errors[] = 'Name needs to be atleast 2 characters long!';
+        if (strlen($this->{$param}) < $length) {
+            $errors[] = ucfirst($translation . ' needs to be atleast ' . $length . ' characters long!');
         }
 
         return $errors;

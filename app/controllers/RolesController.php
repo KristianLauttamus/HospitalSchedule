@@ -24,6 +24,13 @@ class RolesController extends BaseController
             'admin' => isset($params['admin']),
         ));
 
+        $errors = $role->errors();
+        if (count($errors) > 0) {
+            // Todo error message
+
+            Redirect::to('/roles/create', array('errors' => $errors, 'attributes' => $params));
+        }
+
         $role->save();
 
         Redirect::to('/roles#' . $role->id);
