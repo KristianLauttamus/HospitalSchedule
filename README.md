@@ -10,8 +10,8 @@ Linkit:
 * [/users/create](http://krislaut.users.cs.helsinki.fi/tsoha/users/create)
 * [/roles](http://krislaut.users.cs.helsinki.fi/tsoha/roles)
 * [/roles/create](http://krislaut.users.cs.helsinki.fi/tsoha/roles/create)
-* [/hospitals](http://krislaut.users.cs.helsinki.fi/tsoha/roles)
-* [/hospitals/create](http://krislaut.users.cs.helsinki.fi/tsoha/roles/create)
+* [/hospitals](http://krislaut.users.cs.helsinki.fi/tsoha/hospitals)
+* [/hospitals/create](http://krislaut.users.cs.helsinki.fi/tsoha/hospitals/create)
 
 ## Työn aihe
 
