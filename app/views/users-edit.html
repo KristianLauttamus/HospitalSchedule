@@ -14,29 +14,33 @@
 				</div>
 				{% endif %}
 
-				<h2>Create a User!</h2>
-				<form method="POST" action="{{base_path}}/users/store">
+				<h2>Edit user {{user.name}}!</h2>
+				<form method="POST" action="{{base_path}}/users/{{user.id}}/update">
 					<div class="form-group">
 						<label for="name">Fullname</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Fullname" required="required">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Fullname" required="required" value="{{user.name}}">
 					</div>
 					<div class="form-group">
 						<label for="email">Email address</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required="required">
+						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required="required" value="{{user.email}}">
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required" value="{{user.password}}">
 					</div>
 					<div class="form-group">
 						<label for="role_id">Role</label>
 						<select name="role_id" id="role_id" class="form-control" required="required">
 							{% for role in roles %}
-								<option value="{{role.id}}">{{role.name}}</option>
+								{% if user.role_id is role.id %}
+									<option value="{{role.id}}" selected>{{role.name}}</option>
+								{% else %}
+									<option value="{{role.id}}">{{role.name}}</option>
+								{%  endif %}
 							{% endfor %}
 						</select>
 					</div>
-					<button type="submit" class="btn btn-primary btn-block">Create</button>
+					<button type="submit" class="btn btn-primary btn-block">Update</button>
 				</form>
 			</div>
 		</div>
