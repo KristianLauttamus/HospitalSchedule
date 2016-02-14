@@ -60,4 +60,11 @@ class Hospital extends BaseModel
         //Kint::dump($row);
         $this->id = $row['id'];
     }
+
+    /**
+     *
+     * Validation
+     *
+     */
+
 }

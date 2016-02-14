@@ -4,6 +4,17 @@ $routes->get('/', function () {
     HomeController::index();
 });
 
+// Auth
+$routes->get('/login', function () {
+    AuthController::login();
+});
+$routes->post('/login', function () {
+    AuthController::handle_login();
+});
+$routes->get('/logout', function () {
+    AuthController::logout();
+});
+
 // Users
 $routes->get('/users', function () {
     UsersController::index();

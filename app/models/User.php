@@ -9,6 +9,19 @@ class User extends BaseModel
         parent::__construct($attributes);
     }
 
+    // Authenticate
+    public static function authenticate($email, $username)
+    {
+        $query = DB::connection()->prepare('SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1');
+        $query->execute(array('email' => $email, 'password' => $password));
+        $row = $query->fetch();
+        if ($row) {
+            return new User($row[0]);
+        } else {
+            return null;
+        }
+    }
+
     // Find all
     public static function all()
     {
@@ -65,5 +78,14 @@ class User extends BaseModel
         //Kint::trace();
         //Kint::dump($row);
         $this->id = $row['id'];
+    }
+
+    /**
+     *
+     * Validation
+     *
+     */
+    public static validate_relation_by_id($relation, $id, $null = true){
+
     }
 }

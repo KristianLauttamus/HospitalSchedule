@@ -8,19 +8,19 @@
 				<form method="POST" action="{{base_path}}/users/store">
 					<div class="form-group">
 						<label for="name">Fullname</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Fullname">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Fullname" required="required">
 					</div>
 					<div class="form-group">
 						<label for="email">Email address</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+						<input type="email" class="form-control" id="email" name="email" placeholder="Email" required="required">
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required">
 					</div>
 					<div class="form-group">
 						<label for="role_id">Role</label>
-						<select name="role_id" id="role_id" class="form-control">
+						<select name="role_id" id="role_id" class="form-control" required="required">
 							{% for role in roles %}
 								<option value="{{role.id}}">{{role.name}}</option>
 							{% endfor %}
