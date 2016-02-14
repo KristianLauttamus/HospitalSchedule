@@ -16,6 +16,8 @@ class UsersController extends BaseController
 
         // Jos rooleja ei löydy niin luodaan rooli ensin
         if ($roles == null || empty($roles)) {
+            flash()->error('No Roles found!');
+
             Redirect::to('/roles/create');
         }
 
@@ -42,6 +44,57 @@ class UsersController extends BaseController
 
         $user->save();
 
+        Redirect::to('/users#' . $user->id);
+    }
+
+    public static function edit($id)
+    {
+        $user = User::find($id);
+
+        if ($user == null) {
+            flash()->error('User was not found!');
+
+            Redirect::to('/users');
+        }
+
+        $roles = Role::all();
+
+        // Jos rooleja ei löydy niin luodaan rooli ensin
+        if ($roles == null || empty($roles)) {
+            flash()->error('No Roles found!');
+
+            Redirect::to('/roles/create');
+        }
+
+        View::make('users-edit.html', array('user' => $user, 'roles' => $roles));
+    }
+
+    public static function update($id)
+    {
+        $params = $_POST;
+        $user   = User::find($id);
+
+        if ($user == null) {
+            flash()->error('User was not found!');
+
+            Redirect::to('/users');
+        }
+
+        $user->name     = $params['name'];
+        $user->email    = $params['email'];
+        $user->password = $params['password'];
+        $user->role_id  = $params['role_id'];
+
+        $errors = $user->errors();
+        if (count($errors) > 0) {
+            flash()->error(':(', 'Something was a little off...');
+
+            Redirect::to('/users/' . $user->id . '/edit', array('errors' => $errors, 'attributes' => $params));
+        }
+
+        $user->update();
+
+        flash('User updated successfully!');
         Redirect::to('/users#' . $user->id);
     }
 

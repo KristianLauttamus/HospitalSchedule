@@ -39,6 +39,12 @@ $routes->get('/roles/create', function () {
 $routes->post('/roles/store', function () {
     RolesController::store();
 });
+$routes->get('/roles/:id/edit', function ($id) {
+    RolesController::edit($id);
+});
+$routes->post('/roles/:id/update', function ($id) {
+    RolesController::update($id);
+});
 $routes->get('/roles/:id/destroy', function ($id) {
     RolesController::destroy($id);
 });
