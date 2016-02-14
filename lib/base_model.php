@@ -23,7 +23,12 @@ class BaseModel
         $errors = array();
 
         foreach ($this->validators as $validator) {
-            // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+            $varray = explode(':', $validator);
+            if (isset($varray[1])) {
+                $errors[] = call_user_func_array($this->{$varray[0]}, explode(',', $varray));
+            } else {
+                $errors[] = $this->{$varray[0]};
+            }
         }
 
         return $errors;
@@ -44,7 +49,7 @@ class BaseModel
 
     public function validate_relation_by_id($relation, $table, $empty = true)
     {
-        $relation = $this->$relation;
+        $relation = $this->{$relation};
         if ($empty && $relation == '') {
             return [];
         }
@@ -57,6 +62,29 @@ class BaseModel
         } else {
             $errors[] = "That role doesn't exist";
 
+            return $errors;
+        }
+    }
+
+    public function validate_email($param, $unique = false, $table = '', $column = '')
+    {
+        if (filter_var($this->{$param}, FILTER_VALIDATE_EMAIL)) {
+            if ($unique) {
+                $query = DB::connection()->prepare('SELECT * FROM ' . $table . ' WHERE ' . $column . ' = :param LIMIT 1');
+                $query->execute(array('param' => $param));
+                $row = $query->fetch();
+                if ($row) {
+                    $errors[] = "That email is not unique";
+
+                    return $errors;
+                } else {
+                    return [];
+                }
+            }
+
+            return [];
+        } else {
+            $errors[] = 'Invalid email address';
             return $errors;
         }
     }

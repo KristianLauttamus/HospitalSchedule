@@ -7,6 +7,7 @@ class User extends BaseModel
     public function __construct($attributes)
     {
         parent::__construct($attributes);
+        $this->validators = array('validate_name', 'validate_relation_by_id:role_id,' . $attributes['role_id'], 'validate_email:email,true,users,email');
     }
 
     // Authenticate
@@ -78,14 +79,5 @@ class User extends BaseModel
         //Kint::trace();
         //Kint::dump($row);
         $this->id = $row['id'];
-    }
-
-    /**
-     *
-     * Validation
-     *
-     */
-    public static validate_relation_by_id($relation, $id, $null = true){
-
     }
 }
