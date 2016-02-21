@@ -20,5 +20,4 @@ class BaseController
         flash()->error('Et ole kirjautunut sisään!');
         Redirect::to('/login');
     }
-
 }
