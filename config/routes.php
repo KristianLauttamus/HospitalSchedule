@@ -9,12 +9,10 @@ function guest()
         Redirect::to('/');
     }
 }
-
 function auth()
 {
     BaseController::check_logged_in();
 }
-
 function admin()
 {
     BaseController::check_logged_in();
