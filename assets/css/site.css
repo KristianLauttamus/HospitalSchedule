@@ -13,6 +13,10 @@
 	font-family: 'Kaushan Script', cursive;
 }
 
+.navbar-brand>i {
+	color: #990100;
+}
+
 th.open {
 	width: 50px;
 }

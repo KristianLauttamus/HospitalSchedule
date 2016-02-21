@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Users</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="list-group">
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-plus fa-fw"></i></span>
+								<a href="{{base_path}}/users/create">Create User</a>
+							</li>
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-list fa-fw"></i></span>
+								<a href="{{base_path}}/users">List Users</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Roles</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="list-group">
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-plus fa-fw"></i></span>
+								<a href="{{base_path}}/roles/create">Create Role</a>
+							</li>
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-list fa-fw"></i></span>
+								<a href="{{base_path}}/roles">List Roles</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Hospitals</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="list-group">
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-plus fa-fw"></i></span>
+								<a href="{{base_path}}/hospitals/create">Create Hospital</a>
+							</li>
+							<li class="list-group-item">
+								<span class="badge"><i class="fa fa-list fa-fw"></i></span>
+								<a href="{{base_path}}/hospitals">List Hospitals</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -13,6 +13,7 @@
 
 	{% block head %}
 		<link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
 
 		<!-- Bootstrap (tyylitiedosto) -->
@@ -20,6 +21,7 @@
 
 		<!-- Oma tyylitiedostomme -->
 		<link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/css/bootstrap-slider.min.css" rel="stylesheet">
 
 		{% if session.alert %}
 			<link href="{{base_path}}/assets/css/sweetalert.css" rel="stylesheet">
@@ -40,20 +42,22 @@
 					<span class="icon-bar"></span>
 				</button>
 				<!-- Sovelluksen nimi -->
-				<a class="navbar-brand kaushan" href="{{base_path}}">Hospital Schedule</a>
+				<a class="navbar-brand kaushan" href="{{base_path}}"><i class="fa fa-plus fa-3"></i> Hospital Schedule</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="navigation">
 				<ul class="nav navbar-nav">
 					<!-- Navigaation linkit -->
 					<li><a href="{{base_path}}">Index</a></li>
-					<li><a href="{{base_path}}/users">Users (ADMIN)</a></li>
-					<li><a href="{{base_path}}/users/create">Create User (ADMIN)</a></li>
-					<li><a href="{{base_path}}/roles">Roles (ADMIN)</a></li>
-					<li><a href="{{base_path}}/roles/create">Create Role (ADMIN)</a></li>
-					<li><a href="{{base_path}}/hospitals">Hospitals (ADMIN)</a></li>
-					<li><a href="{{base_path}}/hospitals/create">Create Hospital (ADMIN)</a></li>
 				</ul>
+				{% if user_logged_in is not null %}
+					<ul class="nav navbar-nav navbar-right">
+						{% if user_logged_in.role is not null and user_logged_in.role.admin %}
+							<li><a href="{{base_path}}/controlpanel">Control Panel</a></li>
+						{% endif %}
+						<li><a href="{{base_path}}/logout">Logout</a></li>
+					</ul>
+				{% endif %}
 			</div>
 		</div>
 	</nav>
@@ -86,6 +90,11 @@
 				});
 			</script>
 		{% endif %}
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/6.0.16/bootstrap-slider.min.js"></script>
+	{% endblock %}
+	{% block scripts %}
 	{% endblock %}
 </body>
 </html>

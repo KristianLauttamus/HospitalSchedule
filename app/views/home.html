@@ -3,21 +3,41 @@
 {% block content %}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-4">
+			{% if user_logged_in is null %}
 				<h2>Login!</h2>
 				<form method="post" action="{{base_path}}/login">
 					<div class="form-group">
 						<label for="email">Email address</label>
-						<input type="email" class="form-control" id="email" placeholder="Email">
+						<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password" placeholder="Password">
+						<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 					</div>
 					<button type="submit" class="btn btn-primary btn-block">Login</button>
 				</form>
+			{% else %}
+				<h2>{{user_logged_in.name}}</h2>
+				<hr/>
+					{% if user_logged_in.role is not null %}
+						<h3>Group</h3>
+						{{user_logged_in.role.name}}
+					{% endif %}
+					<h3>Email</h3>
+					<a href="mailto:{{user_logged_in.email}}">{{user_logged_in.email}}</a>
+				<hr/>
+				<div class="panel panel-default">
+					<div class="panel-heading">Tools</div>
+					<div class="panel-body">
+						<a href="" class="btn btn-default btn-block">Change Account Info</a>
+						<a href="" class="btn btn-primary btn-block">Change Password</a>
+						<a href="" class="btn btn-default btn-block">...</a>
+					</div>
+				</div>
+			{% endif %}
 			</div>
-			<div class="col-md-offset-2 col-md-7">
+			<div class="col-md-offset-1 col-md-7">
 				<h2>Hospitals</h2>
 				{% if hospitals is empty %}
 					<p>No hospitals found...</p>
@@ -52,4 +72,8 @@
 			</div>
 		</div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{base_path}}/hospitals.js"></script>
 {% endblock %}

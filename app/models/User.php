@@ -4,7 +4,7 @@ class User extends BaseModel
 {
     protected $table = 'users';
 
-    public $id, $name, $email, $password, $role_id;
+    public $id, $name, $email, $password, $role_id, $role;
 
     public function __construct($attributes)
     {
@@ -13,13 +13,19 @@ class User extends BaseModel
     }
 
     // Authenticate
-    public static function authenticate($email, $username)
+    public static function authenticate($email, $password)
     {
         $query = DB::connection()->prepare('SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1');
         $query->execute(array('email' => $email, 'password' => $password));
         $row = $query->fetch();
+
         if ($row) {
-            return new User($row[0]);
+            return new User(array(
+                'id'      => $row['id'],
+                'name'    => $row['name'],
+                'email'   => $row['email'],
+                'role_id' => $row['role_id'],
+            ));
         } else {
             return null;
         }
@@ -64,7 +70,51 @@ class User extends BaseModel
                 'email'    => $row['email'],
                 'password' => $row['password'],
                 'role_id'  => $row['role_id'],
+                'role'     => null,
             ));
+
+            return $user;
+        }
+
+        return null;
+    }
+
+    // Find one with id and include role -relation
+    public static function findWithRole($id)
+    {
+        $query = DB::connection()->prepare('SELECT * FROM users WHERE id = :id LIMIT 1');
+        $query->execute(array('id' => $id));
+        $row     = $query->fetch();
+        $roleRow = null;
+
+        if (isset($row['role_id']) && $row['role_id'] != null) {
+            $query = DB::connection()->prepare('SELECT * FROM roles WHERE id = :id LIMIT 1');
+            $query->execute(array('id' => $row['role_id']));
+            $roleRow = $query->fetch();
+        }
+
+        if ($row) {
+            if ($roleRow) {
+                $user = new User(array(
+                    'id'      => $row['id'],
+                    'name'    => $row['name'],
+                    'email'   => $row['email'],
+                    'role_id' => $row['role_id'],
+                    'role'    => new Role(array(
+                        'id'    => $roleRow['id'],
+                        'name'  => $roleRow['name'],
+                        'admin' => $roleRow['admin'],
+                    )),
+                ));
+            } else {
+                $user = new User(array(
+                    'id'      => $row['id'],
+                    'name'    => $row['name'],
+                    'email'   => $row['email'],
+                    'role_id' => $row['role_id'],
+                    'role'    => null,
+                ));
+            }
 
             return $user;
         }

@@ -12,6 +12,11 @@ class Role extends BaseModel
         $this->validators = array('validate_with_length:name,Name,5');
     }
 
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
     // Find all
     public static function all()
     {

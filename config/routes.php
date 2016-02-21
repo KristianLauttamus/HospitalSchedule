@@ -1,64 +1,97 @@
 <?php
 
+/**
+ * Middleware
+ */
+function guest()
+{
+    if (BaseController::get_user_logged_in() != null) {
+        Redirect::to('/');
+    }
+}
+
+function auth()
+{
+    BaseController::check_logged_in();
+}
+
+function admin()
+{
+    BaseController::check_logged_in();
+
+    $user = BaseController::get_user_logged_in();
+
+    if ($user == null || $user->role == null || !$user->role->isAdmin()) {
+        flash()->error(':(', 'Ei oikeuksia tälle sivulle');
+
+        Redirect::to('/');
+    }
+}
+
 $routes->get('/', function () {
     HomeController::index();
 });
 
 // Auth
-$routes->get('/login', function () {
+$routes->get('/login', 'guest', function () {
     AuthController::login();
 });
-$routes->post('/login', function () {
+$routes->post('/login', 'guest', function () {
     AuthController::handle_login();
 });
-$routes->get('/logout', function () {
+$routes->get('/logout', 'auth', function () {
     AuthController::logout();
 });
 
+// Controlpanel
+$routes->get('/controlpanel', 'admin', function () {
+    AuthController::controlpanel();
+});
+
 // Users
-$routes->get('/users', function () {
+$routes->get('/users', 'admin', function () {
     UsersController::index();
 });
-$routes->get('/users/create', function () {
+$routes->get('/users/create', 'admin', function () {
     UsersController::create();
 });
-$routes->post('/users/store', function () {
+$routes->post('/users/store', 'admin', function () {
     UsersController::store();
 });
-$routes->get('/users/:id/destroy', function ($id) {
+$routes->get('/users/:id/destroy', 'admin', function ($id) {
     UsersController::destroy($id);
 });
 
 // Roles
-$routes->get('/roles', function () {
+$routes->get('/roles', 'admin', function () {
     RolesController::index();
 });
-$routes->get('/roles/create', function () {
+$routes->get('/roles/create', 'admin', function () {
     RolesController::create();
 });
-$routes->post('/roles/store', function () {
+$routes->post('/roles/store', 'admin', function () {
     RolesController::store();
 });
-$routes->get('/roles/:id/edit', function ($id) {
+$routes->get('/roles/:id/edit', 'admin', function ($id) {
     RolesController::edit($id);
 });
-$routes->post('/roles/:id/update', function ($id) {
+$routes->post('/roles/:id/update', 'admin', function ($id) {
     RolesController::update($id);
 });
-$routes->get('/roles/:id/destroy', function ($id) {
+$routes->get('/roles/:id/destroy', 'admin', function ($id) {
     RolesController::destroy($id);
 });
 
 // Hospitals
-$routes->get('/hospitals', function () {
+$routes->get('/hospitals', 'admin', function () {
     HospitalsController::index();
 });
-$routes->get('/hospitals/create', function () {
+$routes->get('/hospitals/create', 'admin', function () {
     HospitalsController::create();
 });
-$routes->post('/hospitals/store', function () {
+$routes->post('/hospitals/store', 'admin', function () {
     HospitalsController::store();
 });
-$routes->get('/hospitals/:id/destroy', function ($id) {
+$routes->get('/hospitals/:id/destroy', 'admin', function ($id) {
     HospitalsController::destroy($id);
 });

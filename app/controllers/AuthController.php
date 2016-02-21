@@ -4,7 +4,7 @@ class AuthController extends BaseController
 {
     public static function login()
     {
-        View::make('user/login.html');
+        View::make('login.html');
     }
 
     public static function handle_login()
@@ -14,12 +14,13 @@ class AuthController extends BaseController
         $user = User::authenticate($params['email'], $params['password']);
 
         if (!$user) {
-            // Todo error message
-            View::make('user/login.html', array('email' => $params['email']));
+            flash()->error(':(', 'Kirjautuminen ei onnistunut');
+
+            View::make('login.html', array('email' => $params['email']));
         } else {
             $_SESSION['user'] = $user->id;
 
-            // Todo login succeeds message
+            flash('Hei!', 'Mukava nähdä sinua taas');
 
             Redirect::to('/');
         }
@@ -29,8 +30,13 @@ class AuthController extends BaseController
     {
         unset($_SESSION['user']);
 
-        // Todo logout successful message
+        flash(':)', 'Tervetuloa uudelleen');
 
         Redirect::to('/');
+    }
+
+    public static function controlpanel()
+    {
+        View::make('controlpanel.html');
     }
 }

@@ -6,7 +6,7 @@ class HospitalsController extends BaseController
     public static function index()
     {
         $hospitals = Hospital::all();
-        // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
+
         View::make('hospitals.html', array('hospitals' => $hospitals));
     }
 
