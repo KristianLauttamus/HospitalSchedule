@@ -82,4 +82,19 @@ class Hospital extends BaseModel
         $query = DB::connection()->prepare('UPDATE hospitals SET (name, open_time, close_time) = (:name, :openTime, :closeTime) WHERE id = :id');
         $query->execute(array('id' => $this->id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
     }
+
+    // TODO: Add Users to Hospital
+    public static function addUsers($allocations)
+    {
+        $query = DB::connection()->prepare('INSERT INTO hour_users (user_id, open_time, close_time) VALUES (:name, :openTime, :closeTime) RETURNING id');
+        $values = '(';
+        foreach($allocations as $allocation){
+            if($allocation['role_id']){
+
+            }
+            $values += $allocation['user_id'] + ',' + $allocation['hour_id'];
+
+            $values += '),';
+        }
+    }
 }

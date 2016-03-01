@@ -20,9 +20,21 @@
 					<label for="name">Name</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{hospital.name}}">
 				</div>
-				<button type="submit" class="btn btn-primary btn-block">Create</button>
+				<div class="form-group">
+					<h2>Auki</h2>
+					<label for="hour_min">Mistä</label>
+					<input type="number" name="open_time" class="form-control" min="0" max="<% max %>" v-model="min" value="{{hospital.open_time}}">
+
+					<label for="hour_min">Mihin</label>
+					<input type="number" name="close_time" class="form-control" min="<% min %>" max="24" v-model="max" value="{{hospital.close_time}}">
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">Update</button>
 			</form>
 		</div>
 	</div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{base_path}}/assets/js/hospitals.js"></script>
 {% endblock %}

@@ -68,6 +68,14 @@ class HospitalsController extends BaseController
         View::make('hospitals-edit.html', array('hospital' => $hospital));
     }
 
+    public static function allocate(){
+        $params = $_POST;
+
+        foreach($params['allocation'] as $allocation){
+            $query = new PDO::
+        }
+    }
+
     public static function update($id)
     {
         $params   = $_POST;
@@ -80,6 +88,8 @@ class HospitalsController extends BaseController
         }
 
         $hospital->name = $params['name'];
+        $hospital->open_time = $params['open_time'];
+        $hospital->close_time = $params['close_time'];
 
         $errors = $hospital->errors();
         if (count($errors) > 0) {

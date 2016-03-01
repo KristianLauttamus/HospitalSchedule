@@ -17,6 +17,7 @@
 								<th>Name</th>
 								<th></th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -24,6 +25,7 @@
 								<tr id="{{hospital.id}}">
 									<td>{{ hospital.id }}</td>
 									<td>{{ hospital.name }}</td>
+									<td><a class="btn btn-success" href="{{base_path}}/hospitals/{{hospital.id}}/allocate">Allocate Users</a></td>
 									<td><a class="btn btn-primary" href="{{base_path}}/hospitals/{{hospital.id}}/edit">Edit</a></td>
 									<td><a class="btn btn-danger" href="{{base_path}}/hospitals/{{hospital.id}}/destroy">Delete</a></td>
 								</tr>
