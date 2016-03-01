@@ -1,6 +1,6 @@
 <?php
 
-class Importance extends BaseModel
+class ImportanceRole extends BaseModel
 {
     protected $table = 'importance_roles';
 
