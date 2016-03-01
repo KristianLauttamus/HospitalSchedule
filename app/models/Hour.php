@@ -71,6 +71,6 @@ class Hour extends BaseModel
     public function update()
     {
         $query = DB::connection()->prepare('UPDATE hours (at, hospital_id, importance_id) VALUES (:at, :hospital_id, :importance_id) WHERE id = :id');
-        $query->execute(array('id' => $id, 'at' => $this->at, 'hospital_id' => $this->hospital_id, 'importance_id' => $this->importance_id));
+        $query->execute(array('id' => $this->id, 'at' => $this->at, 'hospital_id' => $this->hospital_id, 'importance_id' => $this->importance_id));
     }
 }

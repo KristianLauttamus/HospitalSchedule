@@ -55,7 +55,7 @@ class ProfileController extends BaseController
         View::make('profile-password-edit.html');
     }
 
-    public static function passwordUpdate()
+    public static function updatePassword()
     {
         $params = $_POST;
         $user   = BaseController::get_user_logged_in();

@@ -21,7 +21,7 @@ class Role extends BaseModel
     public static function all()
     {
         // Lets use our DB connection and execute our query
-        $query = DB::connection()->prepare('SELECT * FROM roles');
+        $query = DB::connection()->prepare('SELECT * FROM roles ORDER BY id');
         $query->execute();
 
         // Fetch all rows from the query
@@ -76,6 +76,6 @@ class Role extends BaseModel
     public function update()
     {
         $query = DB::connection()->prepare('UPDATE roles SET (name, weight, admin) = (:name, :weight, :admin) WHERE id = :id');
-        $query->execute(array('id' => $id, 'name' => $this->name, 'weight' => $this->weight, 'admin' => $this->admin));
+        $query->execute(array('id' => $this->id, 'name' => $this->name, 'weight' => $this->weight, 'admin' => $this->admin));
     }
 }

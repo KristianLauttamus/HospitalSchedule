@@ -104,6 +104,12 @@ $routes->get('/hospitals/create', 'admin', function () {
 $routes->post('/hospitals/store', 'admin', function () {
     HospitalsController::store();
 });
+$routes->get('/hospitals/:id/edit', 'admin', function ($id) {
+    HospitalsController::edit($id);
+});
+$routes->post('/hospitals/:id/update', 'admin', function ($id) {
+    HospitalsController::update($id);
+});
 $routes->get('/hospitals/:id/destroy', 'admin', function ($id) {
     HospitalsController::destroy($id);
 });

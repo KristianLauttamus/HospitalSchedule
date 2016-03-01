@@ -35,7 +35,7 @@ class User extends BaseModel
     public static function all()
     {
         // Lets use our DB connection and execute our query
-        $query = DB::connection()->prepare('SELECT * FROM users');
+        $query = DB::connection()->prepare('SELECT * FROM users ORDER BY id');
         $query->execute();
 
         // Fetch all rows from the query

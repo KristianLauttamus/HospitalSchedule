@@ -24,7 +24,7 @@ class Hospital extends BaseModel
     public static function all()
     {
         // Lets use our DB connection and execute our query
-        $query = DB::connection()->prepare('SELECT * FROM hospitals');
+        $query = DB::connection()->prepare('SELECT * FROM hospitals ORDER BY id');
         $query->execute();
 
         // Fetch all rows from the query
@@ -80,6 +80,6 @@ class Hospital extends BaseModel
     public function update()
     {
         $query = DB::connection()->prepare('UPDATE hospitals SET (name, open_time, close_time) = (:name, :openTime, :closeTime) WHERE id = :id');
-        $query->execute(array('id' => $id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
+        $query->execute(array('id' => $this->id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
     }
 }
