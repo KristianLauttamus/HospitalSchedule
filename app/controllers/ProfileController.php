@@ -1,6 +1,6 @@
 <?php
 
-class UsersController extends BaseController
+class ProfileController extends BaseController
 {
     public static function edit($id)
     {
