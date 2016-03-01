@@ -41,6 +41,20 @@ $routes->get('/logout', 'auth', function () {
     AuthController::logout();
 });
 
+// Profile
+$routes->get('/profile/edit', 'auth', function () {
+    ProfileController::edit();
+});
+$routes->post('/profile/update', 'auth', function () {
+    ProfileController::edit();
+});
+$routes->get('/profile/password', 'auth', function () {
+    ProfileController::password();
+});
+$routes->post('/profile/password/update', 'auth', function () {
+    ProfileController::updatePassword();
+});
+
 // Controlpanel
 $routes->get('/controlpanel', 'admin', function () {
     AuthController::controlpanel();
