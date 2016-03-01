@@ -29,12 +29,12 @@ class ImportancesController extends BaseController
 
         $importance = new Importance(array());
 
-        $errors = $importance->errors();
+        /*$errors = $importance->errors();
         if (count($errors) > 0) {
-            flash()->error(':(', 'Something was a little off...');
+        flash()->error(':(', 'Something was a little off...');
 
-            Redirect::to('/importances/create', array('errors' => $errors, 'attributes' => $params));
-        }
+        Redirect::to('/importances/create', array('errors' => $errors, 'attributes' => $params));
+        }*/
 
         $importance->save();
 
