@@ -4,7 +4,7 @@ class ProfileController extends BaseController
 {
     public static function edit()
     {
-        $user = $this->get_user_logged_in();
+        $user = BaseController::get_user_logged_in();
 
         if ($user == null) {
             flash()->error('User was not found!');
@@ -18,7 +18,7 @@ class ProfileController extends BaseController
     public static function update()
     {
         $params = $_POST;
-        $user   = $this->get_user_logged_in();
+        $user   = BaseController::get_user_logged_in();
 
         if ($user == null) {
             flash()->error('User was not found!');
@@ -44,7 +44,7 @@ class ProfileController extends BaseController
 
     public static function password()
     {
-        $user = $this->get_user_logged_in();
+        $user = BaseController::get_user_logged_in();
 
         if ($user == null) {
             flash()->error('User was not found!');
@@ -58,7 +58,7 @@ class ProfileController extends BaseController
     public static function passwordUpdate()
     {
         $params = $_POST;
-        $user   = $this->get_user_logged_in();
+        $user   = BaseController::get_user_logged_in();
 
         if ($user == null) {
             flash()->error('User was not found!');
