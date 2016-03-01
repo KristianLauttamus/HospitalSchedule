@@ -35,8 +35,8 @@
 					<select name="importance_id" class="form-control">
 						{% for importance in importances %}
 							<option value="{{importance.id}}">{{importance.id}}
-							{% for role in importance.roles %}
-								 - {% role.role.name %}
+							{% for role in importance.importance_roles %}
+								 - {{ role.role.name }}
 							{% endfor %}
 							</option>
 						{% endfor %}
