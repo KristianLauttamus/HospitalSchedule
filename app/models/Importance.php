@@ -98,7 +98,7 @@ class Importance extends BaseModel
     // Save
     public function save()
     {
-        $query = DB::connection()->prepare('INSERT INTO importances RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO importances DEFAULT VALUES RETURNING id');
         $query->execute();
         $row = $query->fetch();
         //Kint::trace();
