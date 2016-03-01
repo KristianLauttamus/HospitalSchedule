@@ -21,6 +21,7 @@ class RolesController extends BaseController
 
         $role = new Role(array(
             'name'  => $params['name'],
+		'' => $params['weight'],
             'admin' => isset($params['admin']),
         ));
 

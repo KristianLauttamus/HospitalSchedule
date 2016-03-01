@@ -4,7 +4,7 @@ class Role extends BaseModel
 {
     protected $table = 'roles';
 
-    public $id, $name, $admin;
+    public $id, $name, $weight, $admin;
 
     public function __construct($attributes)
     {
@@ -63,8 +63,8 @@ class Role extends BaseModel
     // Save
     public function save()
     {
-        $query = DB::connection()->prepare('INSERT INTO roles (name, admin) VALUES (:name, :admin) RETURNING id');
-        $query->execute(array('name' => $this->name, 'admin' => $this->admin));
+        $query = DB::connection()->prepare('INSERT INTO roles (name, weight, admin) VALUES (:name, :weight, :admin) RETURNING id');
+        $query->execute(array('name' => $this->name, 'weight' => $this->weight, 'admin' => isset($this->admin)));
         $row = $query->fetch();
 
         $this->id = $row['id'];
