@@ -12,7 +12,7 @@ class Importance extends BaseModel
     }
 
     // Find all
-    public static function all()
+    public static function allWithRoles()
     {
         // Importances
         $query = DB::connection()->prepare('SELECT * FROM importances');
@@ -57,7 +57,7 @@ class Importance extends BaseModel
     }
 
     // Find all
-    public static function allWithRoles()
+    public static function all()
     {
         // Lets use our DB connection and execute our query
         $query = DB::connection()->prepare('SELECT * FROM importances');

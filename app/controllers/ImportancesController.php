@@ -27,7 +27,7 @@ class ImportancesController extends BaseController
     {
         $params = $_POST;
 
-        $importance = new Importance();
+        $importance = new Importance(array());
 
         $errors = $importance->errors();
         if (count($errors) > 0) {

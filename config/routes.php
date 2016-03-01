@@ -101,6 +101,6 @@ $routes->get('/importances', 'admin', function () {
 $routes->get('/importances/create', 'admin', function () {
     ImportancesController::create();
 });
-$routes->get('/importances/store', 'admin', function () {
+$routes->post('/importances/store', 'admin', function () {
     ImportancesController::store();
 });
