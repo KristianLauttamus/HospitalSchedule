@@ -14,7 +14,10 @@ class Hospital extends BaseModel
 
     public function isOpen()
     {
-        return time() >= strtotime($this->open_time) && time() <= strtotime($this->close_time);
+        $open  = DateTime::createFromFormat('HH', $this->open_time);
+        $close = DateTime::createFromFormat('HH', $this->close_time);
+        $now   = new DateTime("now");
+        return $now >= $open && $now <= $close;
     }
 
     // Find all
