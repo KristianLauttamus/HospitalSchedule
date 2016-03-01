@@ -31,9 +31,10 @@ class Role extends BaseModel
         // Go through rows
         foreach ($rows as $row) {
             $roles[] = new Role(array(
-                'id'    => $row['id'],
-                'name'  => $row['name'],
-                'admin' => $row['admin'],
+                'id'     => $row['id'],
+                'name'   => $row['name'],
+                'weight' => $row['weight'],
+                'admin'  => $row['admin'],
             ));
         }
 
@@ -49,9 +50,10 @@ class Role extends BaseModel
 
         if ($row) {
             $role = new User(array(
-                'id'    => $row['id'],
-                'name'  => $row['name'],
-                'admin' => $row['admin'],
+                'id'     => $row['id'],
+                'name'   => $row['name'],
+                'weight' => $row['weight'],
+                'admin'  => $row['admin'],
             ));
 
             return $role;
@@ -64,7 +66,7 @@ class Role extends BaseModel
     public function save()
     {
         $query = DB::connection()->prepare('INSERT INTO roles (name, weight, admin) VALUES (:name, :weight, :admin) RETURNING id');
-        $query->execute(array('name' => $this->name, 'weight' => $this->weight, 'admin' => isset($this->admin)));
+        $query->execute(array('name' => $this->name, 'weight' => $this->weight, 'admin' => $this->admin));
         $row = $query->fetch();
 
         $this->id = $row['id'];
@@ -73,7 +75,7 @@ class Role extends BaseModel
     // Update
     public function update()
     {
-        $query = DB::connection()->prepare('UPDATE roles SET (name, admin) = (:name, :admin) WHERE id = :id');
-        $query->execute(array('id' => $id, 'name' => $this->name, 'admin' => $this->admin));
+        $query = DB::connection()->prepare('UPDATE roles SET (name, weight, admin) = (:name, :weight, :admin) WHERE id = :id');
+        $query->execute(array('id' => $id, 'name' => $this->name, 'weight' => $this->weight, 'admin' => $this->admin));
     }
 }

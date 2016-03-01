@@ -18,12 +18,20 @@ class RolesController extends BaseController
     public static function store()
     {
         $params = $_POST;
-
+	
+	if(isset($params['admin']) && $params['admin'] == 'admin'){
         $role = new Role(array(
             'name'  => $params['name'],
-		'' => $params['weight'],
-            'admin' => isset($params['admin']),
+		    'weight' => $params['weight'],
+            'admin' => true,
         ));
+	} else {
+		$role = new Role(array(
+			'name' => $params['name'],
+			'weight' => $params['weight'],
+			'admin' => false,
+		));
+	}
 
         $errors = $role->errors();
         if (count($errors) > 0) {

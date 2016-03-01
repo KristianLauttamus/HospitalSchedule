@@ -32,6 +32,7 @@
 				<hr/>
 
 				<div class="form-group">
+					<label for="importance_id">Tarvittavat roolit & roolien määrät</label>
 					<select name="importance_id" class="form-control">
 						{% for importance in importances %}
 							<option value="{{importance.id}}">{{importance.id}}
