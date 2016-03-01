@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				{% if importances is empty %}
+					<div class="alert alert-default">
+						<p>No Importances created yet...</p>
+					</div>
+				{% else %}
+					<h2>Importances</h2>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Roles</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for importance in importances %}
+								<tr id="{{importance.id}}">
+									<td>{{ importance.id }}</td>
+									<td>{{ importance.roles.length }}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

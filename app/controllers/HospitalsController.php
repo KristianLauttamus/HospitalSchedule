@@ -12,7 +12,15 @@ class HospitalsController extends BaseController
 
     public static function create()
     {
-        View::make('hospitals-create.html');
+        $importances = Importance::allWithRoles();
+
+        if (count($importances) <= 0) {
+            flash()->error(':(', 'No Importances found!');
+
+            Redirect::to('/importances/create');
+        }
+
+        View::make('hospitals-create.html', array('importances' => $importances));
     }
 
     public static function store()
@@ -20,7 +28,9 @@ class HospitalsController extends BaseController
         $params = $_POST;
 
         $hospital = new Hospital(array(
-            'name' => $params['name'],
+            'name'       => $params['name'],
+            'open_time'  => $params['open_time'],
+            'close_time' => $params['close_time'],
         ));
 
         $errors = $hospital->errors();
@@ -31,6 +41,16 @@ class HospitalsController extends BaseController
         }
 
         $hospital->save();
+
+        for ($i = 1; $i <= 24; $i++) {
+            $hour = new Hour(array(
+                'at'            => $i,
+                'hospital_id'   => $hospital->id,
+                'importance_id' => $params['importance_id'],
+            ));
+
+            $hour->save();
+        }
 
         Redirect::to('/hospitals#' . $hospital->id);
     }

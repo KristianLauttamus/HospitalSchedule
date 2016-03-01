@@ -5,14 +5,22 @@ class ImportancesController extends BaseController
 
     public static function index()
     {
-        $importances = Importance::all();
+        $importances = Importance::allWithRoles();
 
         View::make('importances.html', array('importances' => $importances));
     }
 
     public static function create()
     {
-        View::make('importances-create.html');
+        $roles = Role::all();
+
+        if (count($roles) <= 0) {
+            flash()->error(':(', 'Rooleja ei löytynyt');
+
+            Redirect::to('/roles/create');
+        }
+
+        View::make('importances-create.html', array('roles' => $roles));
     }
 
     public static function store()
@@ -30,11 +38,11 @@ class ImportancesController extends BaseController
 
         $importance->save();
 
-        foreach($params['role'] as $role){
+        foreach ($params['roles'] as $role) {
             $importanceRole = new ImportanceRole(array(
                 'importance_id' => $importance->id,
-                'role_id' => $role['role_id'],
-                'needed' => $role['needed']
+                'role_id'       => $role['role_id'],
+                'needed'        => $role['needed'],
             ));
             $importanceRole->save();
         }

@@ -14,13 +14,13 @@ class AuthController extends BaseController
         $user = User::authenticate($params['email'], $params['password']);
 
         if (!$user) {
-            flash()->error(':(', 'Kirjautuminen ei onnistunut');
+            flash()->error(':(', 'Login failed');
 
             View::make('login.html', array('email' => $params['email']));
         } else {
             $_SESSION['user'] = $user->id;
 
-            flash('Hei!', 'Mukava nähdä sinua taas');
+            flash('Hey!', 'Nice to see you again');
 
             Redirect::to('/');
         }
@@ -30,7 +30,7 @@ class AuthController extends BaseController
     {
         unset($_SESSION['user']);
 
-        flash(':)', 'Tervetuloa uudelleen');
+        flash(':)', 'Bye!');
 
         Redirect::to('/');
     }

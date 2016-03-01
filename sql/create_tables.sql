@@ -1,7 +1,9 @@
 -- Lisää CREATE TABLE lauseet tähän tiedostoon
 CREATE TABLE hospitals(
   id SERIAL PRIMARY KEY,
-  name varchar(50) NOT NULL
+  name varchar(50) NOT NULL,
+  open_time INTEGER NOT NULL,
+  close_time INTEGER NOT NULL
 );
 
 CREATE TABLE roles(
@@ -22,7 +24,7 @@ CREATE TABLE hours(
   importance_id INTEGER REFERENCES importances (id)
 );
 
-CREATE TABLE importance_role(
+CREATE TABLE importance_roles(
   id SERIAL PRIMARY KEY,
   needed INTEGER NOT NULL,
   importance_id INTEGER REFERENCES importances (id),

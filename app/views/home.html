@@ -50,22 +50,16 @@
 							</tr>
 						</thead>
 						<tbody>
+							{% for hospital in hospitals %}
 							<tr>
-								<th scope="row">Hnngh</th>
-								<td><span class="label label-success">Yes</span></td>
+								<th scope="row">{{hospital.name}}</th>
+								{% if hospital.isOpen() %}
+									<td><span class="label label-success">Yes</span></td>
+								{% else %}
+									<td><span class="label label-danger">No</span></td>
+								{% endif %}
 							</tr>
-							<tr>
-								<th scope="row">Hnngh</th>
-								<td><span class="label label-success">Yes</span></td>
-							</tr>
-							<tr>
-								<th scope="row">Hnngh</th>
-								<td><span class="label label-success">Yes</span></td>
-							</tr>
-							<tr>
-								<th scope="row">Hnngh</th>
-								<td><span class="label label-danger">No</span></td>
-							</tr>
+							{% endfor %}
 						</tbody>
 					{% endif %}
 				</table>

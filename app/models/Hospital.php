@@ -4,12 +4,17 @@ class Hospital extends BaseModel
 {
     protected $table = 'hospitals';
 
-    public $id, $name;
+    public $id, $name, $open_time, $close_time;
 
     public function __construct($attributes)
     {
         parent::__construct($attributes);
-        $this->validators = array('validate_with_length:name,Name,2');
+        $this->validators = array('validate_with_length:name,Name,2', 'required');
+    }
+
+    public function isOpen()
+    {
+        return time() >= strtotime($this->open_time) && time() <= strtotime($this->close_time);
     }
 
     // Find all
@@ -26,8 +31,10 @@ class Hospital extends BaseModel
         // Go through rows
         foreach ($rows as $row) {
             $hospitals[] = new Hospital(array(
-                'id'   => $row['id'],
-                'name' => $row['name'],
+                'id'         => $row['id'],
+                'name'       => $row['name'],
+                'open_time'  => $row['open_time'],
+                'close_time' => $row['close_time'],
             ));
         }
 
@@ -43,8 +50,10 @@ class Hospital extends BaseModel
 
         if ($row) {
             $hospital = new Hospital(array(
-                'id'   => $row['id'],
-                'name' => $row['name'],
+                'id'         => $row['id'],
+                'name'       => $row['name'],
+                'open_time'  => $row['open_time'],
+                'close_time' => $row['close_time'],
             ));
 
             return $hospital;
@@ -56,8 +65,8 @@ class Hospital extends BaseModel
     // Save
     public function save()
     {
-        $query = DB::connection()->prepare('INSERT INTO hospitals (name) VALUES (:name) RETURNING id');
-        $query->execute(array('name' => $this->name));
+        $query = DB::connection()->prepare('INSERT INTO hospitals (name, open_time, close_time) VALUES (:name, :openTime, :closeTime) RETURNING id');
+        $query->execute(array('name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
         $row = $query->fetch();
         //Kint::trace();
         //Kint::dump($row);
@@ -67,7 +76,7 @@ class Hospital extends BaseModel
     // Update
     public function update()
     {
-        $query = DB::connection()->prepare('UPDATE hospitals SET (name) = (:name) WHERE id = :id');
-        $query->execute(array('id' => $id, 'name' => $this->name));
+        $query = DB::connection()->prepare('UPDATE hospitals SET (name, open_time, close_time) = (:name, :openTime, :closeTime) WHERE id = :id');
+        $query->execute(array('id' => $id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
     }
 }

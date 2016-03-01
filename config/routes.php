@@ -93,3 +93,14 @@ $routes->post('/hospitals/store', 'admin', function () {
 $routes->get('/hospitals/:id/destroy', 'admin', function ($id) {
     HospitalsController::destroy($id);
 });
+
+// Importances
+$routes->get('/importances', 'admin', function () {
+    ImportancesController::index();
+});
+$routes->get('/importances/create', 'admin', function () {
+    ImportancesController::create();
+});
+$routes->get('/importances/store', 'admin', function () {
+    ImportancesController::store();
+});

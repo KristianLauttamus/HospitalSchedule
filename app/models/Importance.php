@@ -14,6 +14,51 @@ class Importance extends BaseModel
     // Find all
     public static function all()
     {
+        // Importances
+        $query = DB::connection()->prepare('SELECT * FROM importances');
+        $query->execute();
+        $rows        = $query->fetchAll();
+        $importances = array();
+
+        foreach ($rows as $row) {
+            $importances[$row['id']] = new Importance(array(
+                'id' => $row['id'],
+            ));
+        }
+
+        // Roles
+        $query = DB::connection()->prepare('SELECT * FROM roles');
+        $query->execute();
+        $rows  = $query->fetchAll();
+        $roles = array();
+
+        foreach ($rows as $row) {
+            $roles[$row['id']] = new Role(array(
+                'id'    => $row['id'],
+                'name'  => $row['name'],
+                'admin' => $row['admin'],
+            ));
+        }
+
+        // Importance_Role
+        $query = DB::connection()->prepare('SELECT * FROM importance_roles');
+        $query->execute();
+        $rows            = $query->fetchAll();
+        $importanceRoles = array();
+
+        foreach ($rows as $row) {
+            $importances[$row['importance_id']]['roles'][] = array(
+                'needed' => $row['needed'],
+                'role'   => $roles[$row['role_id']],
+            );
+        }
+
+        return $importances;
+    }
+
+    // Find all
+    public static function allWithRoles()
+    {
         // Lets use our DB connection and execute our query
         $query = DB::connection()->prepare('SELECT * FROM importances');
         $query->execute();
