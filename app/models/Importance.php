@@ -47,7 +47,7 @@ class Importance extends BaseModel
         $importanceRoles = array();
 
         foreach ($rows as $row) {
-            $importances[$row['importance_id']]['roles'][] = array(
+            $importances[$row['importance_id']]->importance_roles[] = array(
                 'needed' => $row['needed'],
                 'role'   => $roles[$row['role_id']],
             );
