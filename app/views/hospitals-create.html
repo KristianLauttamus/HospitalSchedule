@@ -23,10 +23,10 @@
 				<div class="form-group">
 					<h2>Auki</h2>
 					<label for="hour_min">Mistä</label>
-					<input type="number" min="0" max="<% max %>" v-model="min">
+					<input type="number" name="open_time" class="form-control" min="0" max="<% max %>" v-model="min">
 
 					<label for="hour_min">Mihin</label>
-					<input type="number" min="<% min %>" max="24" v-model="max">
+					<input type="number" name="close_time" class="form-control" min="<% min %>" max="24" v-model="max">
 				</div>
 
 				<hr/>
