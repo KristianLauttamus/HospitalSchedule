@@ -2,7 +2,7 @@
 
 class ProfileController extends BaseController
 {
-    public static function edit($id)
+    public static function edit()
     {
         $user = User::find($_SESSION['user_id']);
 
@@ -42,7 +42,7 @@ class ProfileController extends BaseController
         Redirect::to('/');
     }
 
-    public static function password($id)
+    public static function password()
     {
         $user = User::find($_SESSION['user_id']);
 
