@@ -15,13 +15,21 @@
 							<tr>
 								<th>#</th>
 								<th>Roles</th>
+								<th>Role names</th>
 							</tr>
 						</thead>
 						<tbody>
 							{% for importance in importances %}
 								<tr id="{{importance.id}}">
 									<td>{{ importance.id }}</td>
-									<td>{{ importance.roles.length }}</td>
+									<td>{{ importance.importance_roles.length }}</td>
+									<td>
+										<ul>
+											{% for role in importances.importance_roles %}
+												<li>{{role.name}}</li>
+											{% endfor %}
+										</ul>
+									</td>
 								</tr>
 							{% endfor %}
 						</tbody>

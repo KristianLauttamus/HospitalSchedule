@@ -69,10 +69,10 @@ class HospitalsController extends BaseController
     }
 
     public static function allocate(){
-        $params = $_POST;
+        $users = User::allWithRoles();
 
-        foreach($params['allocation'] as $allocation){
-            $query = new PDO::
+        foreach($users as $user){
+            
         }
     }
 

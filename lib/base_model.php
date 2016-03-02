@@ -50,6 +50,19 @@ class BaseModel
         return $errors;
     }
 
+    public function validate_min_int($param, $translation, $min = 0)
+    {
+        $errors = array();
+        if ($this->{$param} == '' || $this->{$param} == null) {
+            $errors[] = ucfirst($translation . ' is required!');
+        }
+        if ($this->{$param} < $min) {
+            $errors[] = ucfirst($translation . ' needs to be atleast ' . $min . '!');
+        }
+
+        return $errors;
+    }
+
     public function validate_with_length($param, $translation, $length = 0)
     {
         $errors = array();

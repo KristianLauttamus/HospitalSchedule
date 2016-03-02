@@ -56,6 +56,31 @@ class User extends BaseModel
         return $users;
     }
 
+    // Find all
+    public static function allWithRoles()
+    {
+        // Lets use our DB connection and execute our query
+        $query = DB::connection()->prepare('SELECT * FROM users ORDER BY id');
+        $query->execute();
+
+        // Fetch all rows from the query
+        $rows  = $query->fetchAll();
+        $users = array();
+
+        // Go through rows
+        foreach ($rows as $row) {
+            $users[] = new User(array(
+                'id'       => $row['id'],
+                'name'     => $row['name'],
+                'email'    => $row['email'],
+                'password' => $row['password'],
+                'role_id'  => $row['role_id'],
+            ));
+        }
+
+        return $users;
+    }
+
     // Find one with id
     public static function find($id)
     {
