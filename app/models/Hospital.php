@@ -6,6 +6,8 @@ class Hospital extends BaseModel
 
     public $id, $name, $open_time, $close_time;
 
+    public $hours = null;
+
     public function __construct($attributes)
     {
         parent::__construct($attributes);
@@ -65,26 +67,77 @@ class Hospital extends BaseModel
         return null;
     }
 
-    public static function findWithImportanceRelations($id)
+    /**
+     * Find with all relations
+     */
+    public static function findWithRelations($id)
+    {
+        return Hospital::findWithRelationsUseTimes($id, 1, 24);
+    }
+
+    public static function findOpenWithRelations($id)
     {
         $query = DB::connection()->prepare('
-            SELECT hosp.*, h.*, hu.*, u.*, r.*, ir.*, i.* FROM hospitals hosp
-                INNER JOIN hours AS h
-                    ON h.hospital_id = hosp.id
+            SELECT ho.*, h.*, u.*, i.*, ir.* FROM hospitals ho
+                LEFT OUTER JOIN hours AS h
+                    ON h.hospital_id = ho.id
+                        AND h.at >= h.open_time
+                        AND h.at <= h.close_time
                 LEFT OUTER JOIN hour_users AS hu
-                    ON h.id = hu.user_id
-                INNER JOIN users AS u
+                    ON hu.hour_id = h.id
+                LEFT OUTER JOIN users AS u
                     ON hu.user_id = u.id
-                INNER JOIN roles AS r
-                    ON u.role_id = r.id
-                INNER JOIN importances AS i
+                LEFT OUTER JOIN importances AS i
                     ON h.importance_id = i.id
-                INNER JOIN importance_roles AS ir
+                LEFT OUTER JOIN importance_roles AS ir
                     ON i.id = ir.importance_id
-            WHERE hosp.id = :id
+            WHERE ho.id = 1
         ');
         $query->execute(array('id' => $id));
-        var_dump($query->fetch());
+        $results = $query->fetch();
+
+        if ($results) {
+            $hospital = new Hospital(array_splice($results[0], 4));
+
+            $hospital->addRelations($results);
+        }
+
+        return null;
+    }
+
+    /**
+     * Use given opening time and closing time to perform the query and return the model with relations
+     */
+    public static function findWithRelationsUseTimes($id, $opentime, $closetime)
+    {
+        $query = DB::connection()->prepare('
+            SELECT ho.*, h.*, u.*, r.*, i.*, ir.* FROM hospitals ho
+                LEFT OUTER JOIN hours AS h
+                    ON h.hospital_id = ho.id
+                        AND h.at >= :opentime
+                        AND h.at <= :closetime
+                LEFT OUTER JOIN hour_users AS hu
+                    ON hu.hour_id = h.id
+                LEFT OUTER JOIN users AS u
+                    ON hu.user_id = u.id
+                LEFT OUTER JOIN importances AS i
+                    ON h.importance_id = i.id
+                LEFT OUTER JOIN importance_roles AS ir
+                    ON i.id = ir.importance_id
+                LEFT OUTER JOIN roles AS r
+                    ON r.id = u.role_id
+            WHERE ho.id = 1
+        ');
+        $query->execute(array('id' => $id, 'opentime' => $opentime, 'closetime' => $closetime));
+        $results = $query->fetch();
+
+        if ($results) {
+            $hospital = new Hospital(array_slice($results[0], 4));
+
+            $hospital->addRelations($results);
+        }
+
+        return null;
     }
 
     // Save
@@ -103,6 +156,65 @@ class Hospital extends BaseModel
     {
         $query = DB::connection()->prepare('UPDATE hospitals SET (name, open_time, close_time) = (:name, :openTime, :closeTime) WHERE id = :id');
         $query->execute(array('id' => $this->id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
+    }
+
+    public function addRelations($relations)
+    {
+        $importances     = array();
+        $importanceRoles = array();
+        $hours           = array();
+        $users           = array();
+
+        foreach ($relations as $row) {
+            $hospital        = array_splice($row, 4);
+            $hour            = array_splice($row, 4);
+            $user            = array_splice($row, 5);
+            $role            = array_splice($row, 4);
+            $importance      = array_splice($row, 1);
+            $importance_role = array_splice($row, 4);
+
+            // Importance
+            if (isset($importance['id']) && !isset($importances[$importance['id']])) {
+                $importances[$importance['id']] = new Importance($importance);
+            }
+
+            // ImportanceRole's
+            if (isset($importance_role['id'])) {
+                if (!isset($importanceRoles[$importance_role['id']])) {
+                    $importanceRoles[$importance_role['id']] = new ImportanceRole($importance_role);
+                }
+
+                if (isset($importance_role['importance_id']) && isset($importances[$importance_role['importance_id']])) {
+                    $importanceRoles[$importance_role['id']]->importance = $importances[$importance_role['importance_id']];
+                }
+            }
+
+            // User
+            if (isset($user['id']) && !isset($users[$user['id']])) {
+                $users[$user['id']] = new User($user);
+            }
+
+            // Role
+            if (isset($role['id'])) {
+                if (!isset($roles[$role['']])) {
+                    $roles[$role['id']] = new Role($role);
+                }
+
+                if (isset($user['id']) && isset($user['role_id']) && $role['id'] == $user['role_id']) {
+                    $users[$user['id']]->role = $roles[$role['id']];
+                }
+            }
+
+            if (isset($hours[$hour['id']])) {
+                $hours[$hour['id']]->users = $users;
+            } else {
+                $hours[$hour['id']] = new Hour($hour);
+                $users              = array();
+            }
+
+            $hours[count($hours) - 1]->addUsers();
+            $hours[count($hours) - 1]->addUsers();
+        }
     }
 
     // TODO: Add Users to Hospital

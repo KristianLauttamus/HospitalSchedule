@@ -4,7 +4,9 @@ class User extends BaseModel
 {
     protected $table = 'users';
 
-    public $id, $name, $email, $password, $role_id, $role;
+    public $id, $name, $email, $password, $role_id;
+
+    public $role;
 
     public function __construct($attributes)
     {
