@@ -15,37 +15,41 @@
 			{% endif %}
 
 			<h2>Create a Hospital!</h2>
-			<form method="POST" action="{{base_path}}/hospitals/store">
+			<form method="POST" action="{{base_path}}/hospitals/allocation">
 				<div class="form-group">
-					<label for="name">Name</label>
-					<input type="text" class="form-control" id="name" name="name" placeholder="Name">
-				</div>
-				<div class="form-group">
-					<h2>Auki</h2>
-					<label for="hour_min">Mistä</label>
-					<input type="number" name="open_time" class="form-control" min="0" max="<% max %>" v-model="min">
-
-					<label for="hour_min">Mihin</label>
-					<input type="number" name="close_time" class="form-control" min="<% min %>" max="24" v-model="max">
-				</div>
-
-				<hr/>
-
-				<div class="form-group">
-					<label for="importance_id">Tarvittavat roolit & roolien määrät</label>
-					<select name="importance_id" class="form-control">
-						{% for importance in importances %}
-							<option value="{{importance.id}}">{{importance.id}}
-							{% for role in importance.importance_roles %}
-								 - {{ role.role.name }}
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Tunti</th>
+								<th>Tarvittavat roolit</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for hour in hospital.getHours() %}
+								<tr>
+									<td>{{ hour.at }}</td>
+									<td>
+										{% for importanceRole in hour.getImportanceRoles() %}
+											<b>{{ importanceRole.name }} ({{ importanceRole.needed }})</b>
+											<div class="list-group">
+												{% for role in importanceRole.getUsersWithRoles() %}
+													<div class="list-group-item">
+														<label for="importanceRoles[{{importanceRole.id}}][]">
+															<input type="checkbox" name="importanceRoleUsers[{{importanceRole.id}}][]" value="{{role.id}}"> {{role.name}}
+														</label>
+													</div>
+												{% endfor %}
+											</div>
+										{% endfor %}
+									</td>
+								</tr>
 							{% endfor %}
-							</option>
-						{% endfor %}
-					</select>
+						</tbody>
+					</table>
 				</div>
 
 				<hr/>
-				<button type="submit" class="btn btn-primary btn-block">Create</button>
+				<button type="submit" class="btn btn-primary btn-block">Allocate</button>
 			</form>
 		</div>
 	</div>

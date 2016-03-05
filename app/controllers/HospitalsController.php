@@ -68,12 +68,16 @@ class HospitalsController extends BaseController
         View::make('hospitals-edit.html', array('hospital' => $hospital));
     }
 
-    public static function allocate(){
-        $users = User::allWithRoles();
+    public static function allocate($id)
+    {
+        $hospital = Hospital::findWithImportanceRelations($id);
 
-        foreach($users as $user){
-            
-        }
+        View::make('hospitals-allocate.html', array('hospital' => $hospital));
+    }
+
+    public static function allocation($id)
+    {
+
     }
 
     public static function update($id)
@@ -87,8 +91,8 @@ class HospitalsController extends BaseController
             Redirect::to('/hospitals');
         }
 
-        $hospital->name = $params['name'];
-        $hospital->open_time = $params['open_time'];
+        $hospital->name       = $params['name'];
+        $hospital->open_time  = $params['open_time'];
         $hospital->close_time = $params['close_time'];
 
         $errors = $hospital->errors();

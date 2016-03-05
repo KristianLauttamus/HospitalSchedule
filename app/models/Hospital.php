@@ -65,6 +65,28 @@ class Hospital extends BaseModel
         return null;
     }
 
+    public static function findWithImportanceRelations($id)
+    {
+        $query = DB::connection()->prepare('
+            SELECT hosp.*, h.*, hu.*, u.*, r.*, ir.*, i.* FROM hospitals hosp
+                INNER JOIN hours AS h
+                    ON h.hospital_id = hosp.id
+                LEFT OUTER JOIN hour_users AS hu
+                    ON h.id = hu.user_id
+                INNER JOIN users AS u
+                    ON hu.user_id = u.id
+                INNER JOIN roles AS r
+                    ON u.role_id = r.id
+                INNER JOIN importances AS i
+                    ON h.importance_id = i.id
+                INNER JOIN importance_roles AS ir
+                    ON i.id = ir.importance_id
+            WHERE hosp.id = :id
+        ');
+        $query->execute(array('id' => $id));
+        var_dump($query->fetch());
+    }
+
     // Save
     public function save()
     {
@@ -86,13 +108,13 @@ class Hospital extends BaseModel
     // TODO: Add Users to Hospital
     public static function addUsers($allocations)
     {
-        $query = DB::connection()->prepare('INSERT INTO hour_users (user_id, open_time, close_time) VALUES (:name, :openTime, :closeTime) RETURNING id');
+        $query  = DB::connection()->prepare('INSERT INTO hour_users (user_id, open_time, close_time) VALUES (:name, :openTime, :closeTime) RETURNING id');
         $values = '(';
-        foreach($allocations as $allocation){
-            if($allocation['role_id']){
+        foreach ($allocations as $allocation) {
+            if ($allocation['role_id']) {
 
             }
-            $values += $allocation['user_id'] + ',' + $allocation['hour_id'];
+            $values += $allocation['user_id']+','+$allocation['hour_id'];
 
             $values += '),';
         }
