@@ -6,6 +6,10 @@ class Hour extends BaseModel
 
     public $id, $at, $hospital_id, $importance_id;
 
+    public $importance = null;
+    public $hospital   = null;
+    public $users      = array();
+
     public function __construct($attributes)
     {
         parent::__construct($attributes);

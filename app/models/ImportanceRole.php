@@ -6,6 +6,8 @@ class ImportanceRole extends BaseModel
 
     public $id, $importance_id, $role_id, $needed;
 
+    public $importance = null;
+
     public function __construct($attributes)
     {
         parent::__construct($attributes);

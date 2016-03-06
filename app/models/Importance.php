@@ -4,7 +4,9 @@ class Importance extends BaseModel
 {
     protected $table = 'importances';
 
-    public $id, $importance_roles;
+    public $id;
+
+    public $roles = array();
 
     public function __construct($attributes)
     {

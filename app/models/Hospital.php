@@ -100,6 +100,8 @@ class Hospital extends BaseModel
             $hospital = new Hospital(array_splice($results[0], 4));
 
             $hospital->addRelations($results);
+
+            return $hospital;
         }
 
         return null;
@@ -135,6 +137,8 @@ class Hospital extends BaseModel
             $hospital = new Hospital(array_slice($results[0], 4));
 
             $hospital->addRelations($results);
+
+            return $hospital;
         }
 
         return null;
@@ -158,6 +162,9 @@ class Hospital extends BaseModel
         $query->execute(array('id' => $this->id, 'name' => $this->name, 'openTime' => $this->open_time, 'closeTime' => $this->close_time));
     }
 
+    /**
+     * Add relations from returned database query
+     */
     public function addRelations($relations)
     {
         $importances     = array();
@@ -179,13 +186,12 @@ class Hospital extends BaseModel
             }
 
             // ImportanceRole's
-            if (isset($importance_role['id'])) {
-                if (!isset($importanceRoles[$importance_role['id']])) {
-                    $importanceRoles[$importance_role['id']] = new ImportanceRole($importance_role);
-                }
+            if (isset($importance_role['id']) && !isset($importanceRoles[$importance_role['id']])) {
+                $importanceRoles[$importance_role['id']] = new ImportanceRole($importance_role);
 
                 if (isset($importance_role['importance_id']) && isset($importances[$importance_role['importance_id']])) {
-                    $importanceRoles[$importance_role['id']]->importance = $importances[$importance_role['importance_id']];
+                    $importance[$importance_role['importance_id']]->roles[] = $importanceRoles[$importance_role['id']];
+                    $importanceRoles[$importance_role['id']]->importance    = $importances[$importance_role['importance_id']];
                 }
             }
 
@@ -196,7 +202,7 @@ class Hospital extends BaseModel
 
             // Role
             if (isset($role['id'])) {
-                if (!isset($roles[$role['']])) {
+                if (!isset($roles[$role['id']])) {
                     $roles[$role['id']] = new Role($role);
                 }
 
